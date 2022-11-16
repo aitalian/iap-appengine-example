@@ -14,10 +14,9 @@ $user = array_filter(array(
         null
     ),
     'location' => implode(", ", array_filter(array(
-        ucwords($headers['X-Appengine-City']),
-        strtoupper($headers['X-Appengine-Region']),
-        ucwords($headers['X-Appengine-Country']),
-        null
+        (isset($headers['X-Appengine-City']) ? ucwords($headers['X-Appengine-City']) : null),
+        (isset($headers['X-Appengine-Region']) ? strtoupper($headers['X-Appengine-Region']) : null),
+        (isset($headers['X-Appengine-Country']) ? ucwords($headers['X-Appengine-Country']) : null)
     )))
 ));
 
