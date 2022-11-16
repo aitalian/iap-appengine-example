@@ -1,17 +1,23 @@
-# iap-appengine-example
+# IAP App Engine example
 
-A simple PHP application deployed to Google Cloud Platform - App Engine to demonstrate Identity Aware Proxy (IAP) and  prints the following request headers supplied by IAP:
+A simple monolithic PHP application deployed to [Google Cloud Platform - App Engine](https://cloud.google.com/appengine) to demonstrate [Identity Aware Proxy (IAP)](https://cloud.google.com/iap/) and  prints the following (unsigned) [request headers](https://cloud.google.com/iap/docs/identity-howto#getting_the_users_identity_with_signed_headers) supplied by IAP:
 
  * `X-Goog-Authenticated-User-Id`
  * `X-Goog-Authenticated-User-Email`
 
-Additional headers are provided by App Engine and used in the generated output for demonstration purposes.
+**NOTE:** This demo is NOT using [Signed JWT headers](https://cloud.google.com/iap/docs/signed-headers-howto) which are advised for production use.
+
+[Additional headers](https://cloud.google.com/appengine/docs/standard/reference/request-headers?tab=python#app_engine-specific_headers) are provided by App Engine and used in the generated output for demonstration purposes.
 
 Since this is a demo, all headers are printed in the page as a hidden comment - you can see them by viewing the page source (right-click > View Page Source) and viewing the section marked with: `<!-- #debug information, all headers`.
 
 ## Deployment
 
-To deploy, create a new GCP Project, and then in Cloud Shell run:
+Best practice is to separate each app into it's own project. It's important to note that only one OAuth Consent Screen can be configured per project and cannot be destroyed. Additionally, an App Engine deployment cannot easily be destroyed, only disabled. To destroy both of this will require deletion of the project.
+
+Create a new project for the application to be deployed into.
+
+**After you create a new GCP Project**, with the project selected, open Cloud Shell and run:
 
 ```sh
 # Checkout
@@ -32,11 +38,15 @@ export AUTH_DOMAIN=$(gcloud config get-value project).uc.r.appspot.com
 echo $AUTH_DOMAIN
 ```
 
-Observe that the application is openly accessible. The next step will be to protect it using IAP.
+Open the URL in your browser and observe that the application is openly accessible.
+
+The next step will be to protect it using IAP.
 
 ## Protect with IAP
 
 Once deployed, protect the app's endpoint using IAP. Go to **Security > Identity Aware Proxy**, and then **Enable API** (if not already enabled).
+
+### Configure OAuth Consent Screen
 
 Once enabled, go back to **Security > Identity Aware Proxy**, and follow the prompts to configure the **OAuth Consent Screen**:
 
@@ -47,6 +57,8 @@ Once enabled, go back to **Security > Identity Aware Proxy**, and follow the pro
  * **Developer contact email:** *your email*
 
 *Save and Continue* leaving all other default values.
+
+### Enable IAP on App Engine application
 
 Go back to the **Security > Identity Aware Proxy** page and toggle the **IAP** button next to your App Engine app in the list. The **Published** column will contain your protect app's URL. Copy and paste this into your browser to test.
 
@@ -60,4 +72,4 @@ Try and access the same URL. You will see an OAuth Consent Screen named as you c
 
 ### Clear IAP Session Cookie
 
-If you need to "log out", y ou will need to create the session cookie created by IAP. To do this, append the following to the Published App URL: `/_gcp_iap/clear_login_cookie` and then try your request again.
+If you need to "log out", you will need to create the session cookie created by IAP. To do this, append the following to the Published App URL: `/_gcp_iap/clear_login_cookie` and then try your request again.
