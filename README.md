@@ -9,7 +9,8 @@ To deploy, create a new GCP Project, and then in Cloud Shell run:
 
 ```sh
 # Checkout
-git clone git@github.com:aitalian/iap-appengine-example.git
+git clone https://github.com/aitalian/iap-appengine-example.git
+cd iap-appengine-example
 
 # Create App Engine environment
 gcloud app create --project=$(gcloud config get-value project) --region=us-central
@@ -27,8 +28,9 @@ echo $AUTH_DOMAIN
 
 Once deployed, protect it using IAP by going to Security > Identity Aware Proxy, and then Enable API. Once enabled, Go To Identity Aware Proxy and configure the OAuth Consent Screen:
 
+ * **User Type:** Internal
  * **Application Name:** IAP Example
- * **Support email:** <enter your email>
+ * **User Support email:** <enter your email>
  * **Authorized domain:** Add the value of `$AUTH_DOMAIN` from the Cloud Shell output.
  * **Developer contact email:** <enter your email>
 
