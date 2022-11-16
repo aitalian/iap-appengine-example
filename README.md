@@ -30,9 +30,9 @@ Once deployed, protect it using IAP by going to Security > Identity Aware Proxy,
 
  * **User Type:** Internal
  * **Application Name:** IAP Example
- * **User Support email:** <enter your email>
+ * **User Support email:** *your email*
  * **Authorized domain:** Add the value of `$AUTH_DOMAIN` from the Cloud Shell output.
- * **Developer contact email:** <enter your email>
+ * **Developer contact email:** *your email*
 
 Save and Continue leaving all other default values.
 
@@ -41,5 +41,3 @@ Go back to the Identity Aware Proxy page and toggle the **IAP** button next to y
 To add authorized users, click on the **Add Member** button. Add IAM Principals with Role: **Cloud IAP > IAP-secured Web App User**.
 
 To clear the session cookie created by IAP, append the following to the Published App URL: `/_gcp_iap/clear_login_cookie` and then try your request again.
-
-
