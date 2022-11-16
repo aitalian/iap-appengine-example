@@ -9,7 +9,7 @@ To deploy, create a new GCP Project, and then in Cloud Shell run:
 
 ```sh
 # Checkout
-git clone <repo_url>
+git clone git@github.com:aitalian/iap-appengine-example.git
 
 # Create App Engine environment
 gcloud app create --project=$(gcloud config get-value project) --region=us-central
